@@ -12,8 +12,8 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Temporary navigation for UI development.
-    // Real authentication will be connected later.
+    
+    
     router.push("/sites");
   };
 

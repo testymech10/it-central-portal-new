@@ -233,9 +233,7 @@ export default function SiteDashboard() {
    * VIEW CATEGORY
    */
   const viewCategory = (category: Category) => {
-    alert(
-      `${category.name}\n\n${category.description}\n\nThe ${category.name} page will be built next.`
-    );
+    router.push(`/sites/${site}/${category.id}`);
   };
 
   return (
