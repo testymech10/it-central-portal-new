@@ -87,6 +87,7 @@ export default function SiteDashboard() {
 
   const [categories, setCategories] =
     useState<Category[]>(defaultCategories);
+    const [hasLoaded, setHasLoaded] = useState(false);
 
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -116,6 +117,8 @@ export default function SiteDashboard() {
       }
     } catch (error) {
       console.error("Failed to load categories:", error);
+    } finally {
+      setHasLoaded(true);
     }
   }, [storageKey]);
 
@@ -123,6 +126,8 @@ export default function SiteDashboard() {
    * SAVE CATEGORIES
    */
   useEffect(() => {
+    if (!hasLoaded) return;
+
     try {
       localStorage.setItem(
         storageKey,
@@ -131,7 +136,7 @@ export default function SiteDashboard() {
     } catch (error) {
       console.error("Failed to save categories:", error);
     }
-  }, [categories, storageKey]);
+  }, [categories, storageKey, hasLoaded]);
 
   /*
    * OPEN ADD MODAL

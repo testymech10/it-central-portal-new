@@ -12,8 +12,6 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    
-    
     router.push("/sites");
   };
 
