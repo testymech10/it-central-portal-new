@@ -340,7 +340,7 @@ export default function SelectSitePage() {
                 type="text"
                 value={siteName}
                 onChange={(e) => setSiteName(e.target.value)}
-                placeholder="Example: DAVAO"
+                placeholder="Example: BGC"
                 className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               />
               <p className="mt-1 text-xs text-slate-400">
@@ -356,7 +356,7 @@ export default function SelectSitePage() {
                 type="text"
                 value={siteLocation}
                 onChange={(e) => setSiteLocation(e.target.value)}
-                placeholder="Example: Davao City"
+                placeholder="Example: Global Bonifacio City"
                 className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               />
             </div>
