@@ -290,27 +290,27 @@ export default function SelectSitePage() {
             </div>
           )}
 
-          {/* Add New Site */}
+          {}
           <div className="mt-10 flex justify-center">
             <button
               onClick={openAddModal}
               className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-900/30 transition-all hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-blue-900/50"
             >
-              + Add New Site
+               Add New Site
             </button>
           </div>
 
-          {/* Footer information */}
+          {}
           <div className="mt-12 flex items-center justify-center gap-3">
             <div className="h-2 w-2 rounded-full bg-orange-400" />
             <p className="text-xs text-blue-300">
-              Secure IT Operations Portal
+               SALESRAIN IT SUPPORT
             </p>
           </div>
         </div>
       </section>
 
-      {/* ADD / EDIT MODAL */}
+      {}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-5 backdrop-blur-sm">
           <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white p-7 shadow-2xl">
