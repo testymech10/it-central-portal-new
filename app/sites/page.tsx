@@ -368,7 +368,7 @@ export default function SelectSitePage() {
               <textarea
                 value={siteDescription}
                 onChange={(e) => setSiteDescription(e.target.value)}
-                placeholder="Example: Davao Site"
+                placeholder="Example: BGC Site"
                 rows={3}
                 className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               />
