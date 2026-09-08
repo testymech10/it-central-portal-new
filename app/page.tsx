@@ -9,10 +9,10 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+ const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    router.push("/sites");
+    router.push("/select");
   };
 
   return (
@@ -58,8 +58,7 @@ export default function LoginPage() {
 
               <p className="mt-5 max-w-md text-sm leading-6 text-blue-100">
                 Access IT documentation, assets, network information,
-                monitoring resources, and operational records from one
-                centralized platform.
+                monitoring resources, and operational records.
               </p>
 
             </div>
@@ -71,7 +70,7 @@ export default function LoginPage() {
                 <div className="h-2 w-2 rounded-full bg-orange-400" />
 
                 <p className="text-xs text-blue-200">
-                  Secure IT Operations Portal
+                  Secure centralized Portal
                 </p>
 
               </div>
@@ -117,7 +116,7 @@ export default function LoginPage() {
                 </h2>
 
                 <p className="mt-2 text-sm text-slate-500">
-                  Sign in to access the IT Centralized Portal.
+                  Please sign in to access the IT Centralized Portal.
                 </p>
 
               </div>

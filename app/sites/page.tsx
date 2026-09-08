@@ -160,14 +160,14 @@ export default function SelectSitePage() {
           <div className="flex items-center gap-3">
             {/* Back button */}
             <button
-              onClick={() => router.push("/")}
-              className="group flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-blue-100 transition hover:bg-white/10 hover:text-white"
-            >
-              <span className="transition-transform group-hover:-translate-x-1">
-                ←
-              </span>
-              Back
-            </button>
+          onClick={() => router.push("/select")}
+       className="group flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-blue-100 transition hover:bg-white/10 hover:text-white"
+>
+  <span className="transition-transform group-hover:-translate-x-1">
+    ←
+  </span>
+  Back
+</button>
 
             {/* Edit toggle */}
             <button
