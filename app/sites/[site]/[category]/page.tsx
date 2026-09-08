@@ -215,6 +215,8 @@ export default function CategoryPage() {
 
   const isPdf = (fileName: string) =>
     fileName.toLowerCase().endsWith(".pdf");
+  const isImage = (fileName: string) =>
+  /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(fileName);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#071A33] text-white">
@@ -405,7 +407,7 @@ export default function CategoryPage() {
           onClick={() => setPreviewFile(null)}
         >
           <div
-            className="flex h-[85vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl"
+            className="flex h-[85vh] min-h-0 w-full max-w-4xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3">
@@ -420,29 +422,38 @@ export default function CategoryPage() {
               </button>
             </div>
 
-            <div className="flex-1 bg-slate-100">
-              {isPdf(previewFile.file_name) ? (
-                <iframe
-                  src={previewFile.file_url}
-                  className="h-full w-full"
-                  title={previewFile.file_name}
-                />
-              ) : (
-                <div className="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
-                  <p className="text-sm text-slate-500">
-                    Preview isn&apos;t available for this file type.
-                  </p>
-                  <a
-                    href={previewFile.file_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700"
-                  >
-                    Open File
-                  </a>
-                </div>
-              )}
-            </div>
+      <div className="min-h-0 flex-1 overflow-auto bg-slate-100">
+  {isPdf(previewFile.file_name) ? (
+    <iframe
+      src={previewFile.file_url}
+      className="h-full w-full"
+      title={previewFile.file_name}
+    />
+  ) : isImage(previewFile.file_name) ? (
+    <div className="flex min-h-full w-max min-w-full items-start justify-center p-6">
+      <img
+        src={previewFile.file_url}
+        alt={previewFile.file_name}
+        className="block max-w-none rounded-lg shadow-lg"
+      />
+    </div>
+  ) : (
+    <div className="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
+      <p className="text-sm text-slate-500">
+        Preview isn&apos;t available for this file type.
+      </p>
+
+      <a
+        href={previewFile.file_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700"
+      >
+        Open File
+      </a>
+    </div>
+  )}
+</div>
           </div>
         </div>
       )}
