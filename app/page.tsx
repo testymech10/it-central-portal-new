@@ -1,25 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
- const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleProceed = () => {
     router.push("/select");
   };
 
   return (
-    <main className="min-h-screen bg-[#071A33] relative overflow-hidden">
+    <main className="relative min-h-screen overflow-hidden bg-[#071A33]">
 
       {/* Background decoration */}
-      <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl" />
+      <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl" />
 
       <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-orange-500/20 blur-3xl" />
 
@@ -28,7 +22,9 @@ export default function LoginPage() {
 
         <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-2xl md:grid-cols-2">
 
-          {/* LEFT SIDE */}
+          {/* =========================================
+              LEFT SIDE
+          ========================================== */}
           <div className="hidden bg-gradient-to-br from-[#0B3A82] to-[#092653] p-12 text-white md:flex md:flex-col md:justify-between">
 
             <div>
@@ -52,10 +48,12 @@ export default function LoginPage() {
 
               </div>
 
+              {/* Main heading */}
               <h1 className="max-w-md text-4xl font-bold leading-tight">
                 Centralized IT Infrastructure
               </h1>
 
+              {/* Description */}
               <p className="mt-5 max-w-md text-sm leading-6 text-blue-100">
                 Access IT documentation, assets, network information,
                 monitoring resources, and operational records.
@@ -63,6 +61,7 @@ export default function LoginPage() {
 
             </div>
 
+            {/* Bottom information */}
             <div className="border-t border-white/10 pt-6">
 
               <div className="flex items-center gap-3">
@@ -70,7 +69,7 @@ export default function LoginPage() {
                 <div className="h-2 w-2 rounded-full bg-orange-400" />
 
                 <p className="text-xs text-blue-200">
-                  Secure centralized Portal
+                  Centralized IT Support Portal
                 </p>
 
               </div>
@@ -80,15 +79,17 @@ export default function LoginPage() {
           </div>
 
 
-          {/* LOGIN SIDE */}
-          <div className="flex items-center justify-center p-8 sm:p-12">
+          {/* =========================================
+              RIGHT SIDE
+          ========================================== */}
+          <div className="flex min-h-[550px] items-center justify-center p-8 sm:p-12">
 
             <div className="w-full max-w-sm">
 
               {/* Mobile logo */}
-              <div className="mb-8 flex items-center gap-3 md:hidden">
+              <div className="mb-10 flex items-center gap-3 md:hidden">
 
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-700 text-white font-bold">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-700 font-bold text-white">
                   IT
                 </div>
 
@@ -105,74 +106,72 @@ export default function LoginPage() {
               </div>
 
 
-              <div className="mb-8">
+              {/* Welcome section */}
+              <div className="mb-10">
 
-                <p className="mb-2 text-sm font-semibold text-orange-500">
+                <p className="mb-3 text-sm font-semibold text-orange-500">
                   SALESRAIN IT SUPPORT
                 </p>
 
-                <h2 className="text-3xl font-bold text-slate-900">
-                  Sign in
+                <h2 className="text-4xl font-bold text-slate-900">
+                  Welcome
                 </h2>
 
-                <p className="mt-2 text-sm text-slate-500">
-                  Please sign in to access the IT Centralized Portal.
+                <p className="mt-4 text-sm leading-6 text-slate-500">
+                  Access the centralized IT infrastructure portal
+                  for documentation, assets, network information,
+                  monitoring resources, and operational records.
                 </p>
 
               </div>
 
 
-              <form onSubmit={handleLogin} className="space-y-5">
+              {/* Proceed button */}
+              <button
+                type="button"
+                onClick={handleProceed}
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-700/20 transition-all hover:bg-blue-800 hover:shadow-xl hover:shadow-blue-700/30 active:scale-[0.99]"
+              >
+                <span>
+                  Proceed
+                </span>
 
-                {/* Username */}
-                <div>
+                <span className="transition-transform duration-200 group-hover:translate-x-1">
+                  →
+                </span>
+              </button>
 
-                  <label className="mb-2 block text-sm font-medium text-slate-700">
-                    Username
-                  </label>
 
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username"
-                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-600/10"
-                  />
+              {/* Information */}
+              <div className="mt-8 rounded-xl border border-blue-100 bg-blue-50 px-4 py-4">
+
+                <div className="flex items-start gap-3">
+
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-orange-500 text-xs font-bold text-white">
+                    IT
+                  </div>
+
+                  <div>
+
+                    <p className="text-sm font-semibold text-slate-800">
+                      IT Central Portal
+                    </p>
+
+                    <p className="mt-1 text-xs leading-5 text-slate-500">
+                      Select your site to continue to the
+                      centralized IT resources.
+                    </p>
+
+                  </div>
 
                 </div>
 
-
-                {/* Password */}
-                <div>
-
-                  <label className="mb-2 block text-sm font-medium text-slate-700">
-                    Password
-                  </label>
-
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-600/10"
-                  />
-
-                </div>
+              </div>
 
 
-                {/* Login */}
-                <button
-                  type="submit"
-                  className="w-full rounded-xl bg-blue-700 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-700/20 transition hover:bg-blue-800 active:scale-[0.99]"
-                >
-                  Sign In
-                </button>
-
-              </form>
-
-
+              {/* Footer */}
               <p className="mt-8 text-center text-xs text-slate-400">
-                IT Central Portal
+                SalesRain IT Support
               </p>
 
             </div>
