@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 type Shortcut = {
   id: string;
   name: string;
+  link_url?: string | null;
   created_at?: string;
 };
 
@@ -20,12 +21,13 @@ export default function SelectPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingShortcut, setEditingShortcut] = useState<Shortcut | null>(null);
   const [nameInput, setNameInput] = useState("");
+  const [linkInput, setLinkInput] = useState("");
 
   useEffect(() => {
     fetchShortcuts();
   }, []);
 
- async function fetchShortcuts() {
+  async function fetchShortcuts() {
     setLoading(true);
     const { data, error } = await supabase
       .from("shortcuts")
@@ -33,7 +35,13 @@ export default function SelectPage() {
       .order("created_at", { ascending: true });
 
     if (error) {
-      console.error("Error fetching shortcuts:", error.message, error.details, error.hint, error.code);
+      console.error(
+        "Error fetching shortcuts:",
+        error.message,
+        error.details,
+        error.hint,
+        error.code
+      );
     } else {
       setShortcuts(data || []);
     }
@@ -43,12 +51,14 @@ export default function SelectPage() {
   function openAddModal() {
     setEditingShortcut(null);
     setNameInput("");
+    setLinkInput("");
     setIsModalOpen(true);
   }
 
   function openEditModal(shortcut: Shortcut) {
     setEditingShortcut(shortcut);
     setNameInput(shortcut.name);
+    setLinkInput(shortcut.link_url || "");
     setIsModalOpen(true);
   }
 
@@ -56,31 +66,43 @@ export default function SelectPage() {
     setIsModalOpen(false);
     setEditingShortcut(null);
     setNameInput("");
+    setLinkInput("");
+  }
+
+  function normalizeUrl(url: string) {
+    const trimmed = url.trim();
+    if (!trimmed) return null;
+    if (!/^https?:\/\//i.test(trimmed)) {
+      return `https://${trimmed}`;
+    }
+    return trimmed;
   }
 
   async function handleSave() {
-    const trimmed = nameInput.trim();
-    if (!trimmed) return;
+    const trimmedName = nameInput.trim();
+    if (!trimmedName) return;
+
+    const normalizedLink = normalizeUrl(linkInput);
 
     if (editingShortcut) {
-      // Edit existing
       const { error } = await supabase
         .from("shortcuts")
-        .update({ name: trimmed })
+        .update({ name: trimmedName, link_url: normalizedLink })
         .eq("id", editingShortcut.id);
 
       if (error) {
         console.error("Error updating shortcut:", error);
+        alert(`Failed to update: ${error.message}`);
         return;
       }
     } else {
-      // Add new
       const { error } = await supabase
         .from("shortcuts")
-        .insert({ name: trimmed });
+        .insert({ name: trimmedName, link_url: normalizedLink });
 
       if (error) {
         console.error("Error adding shortcut:", error);
+        alert(`Failed to add: ${error.message}`);
         return;
       }
     }
@@ -96,9 +118,19 @@ export default function SelectPage() {
     const { error } = await supabase.from("shortcuts").delete().eq("id", id);
     if (error) {
       console.error("Error deleting shortcut:", error);
+      alert(`Failed to delete: ${error.message}`);
       return;
     }
     fetchShortcuts();
+  }
+
+  function handleShortcutClick(shortcut: Shortcut) {
+    if (shortcut.link_url) {
+      window.open(shortcut.link_url, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    router.push(`/select/${shortcut.name.toLowerCase()}`);
   }
 
   return (
@@ -166,13 +198,15 @@ export default function SelectPage() {
             {/* Dynamic shortcuts */}
             {shortcuts.map((shortcut) => (
               <div key={shortcut.id} className="group relative">
-              <button onClick={() =>
-    router.push(`/select/${shortcut.name.toLowerCase()}`)
-  }
-  className="w-full rounded-lg bg-white/10 px-4 py-4 text-sm font-bold text-blue-100 transition-all hover:-translate-y-0.5 hover:bg-white/20"
->
-  {shortcut.name}
-</button>
+                <button
+                  onClick={() => handleShortcutClick(shortcut)}
+                  className="w-full rounded-lg bg-white/10 px-4 py-4 text-sm font-bold text-blue-100 transition-all hover:-translate-y-0.5 hover:bg-white/20"
+                >
+                  {shortcut.name}
+                  {shortcut.link_url && (
+                    <span className="ml-1 text-xs text-orange-300">🔗</span>
+                  )}
+                </button>
 
                 {/* Edit / Delete controls */}
                 <div className="absolute -top-2 -right-2 hidden gap-1 group-hover:flex">
@@ -210,6 +244,10 @@ export default function SelectPage() {
             <h3 className="mb-4 text-lg font-bold text-white">
               {editingShortcut ? "Edit Shortcut" : "Add Shortcut"}
             </h3>
+
+            <label className="mb-1 block text-xs font-semibold text-blue-200">
+              Name
+            </label>
             <input
               type="text"
               value={nameInput}
@@ -217,10 +255,25 @@ export default function SelectPage() {
               placeholder="Shortcut name"
               autoFocus
               className="mb-4 w-full rounded-lg bg-white/10 px-4 py-2 text-sm text-white placeholder-blue-200/50 outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            <label className="mb-1 block text-xs font-semibold text-blue-200">
+              Link URL{" "}
+              <span className="font-normal text-blue-200/50">
+                (optional — clicking opens this instead of a folder)
+              </span>
+            </label>
+            <input
+              type="text"
+              value={linkInput}
+              onChange={(e) => setLinkInput(e.target.value)}
+              placeholder="https://your-zabbix-server.com"
+              className="mb-4 w-full rounded-lg bg-white/10 px-4 py-2 text-sm text-white placeholder-blue-200/50 outline-none focus:ring-2 focus:ring-blue-500"
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleSave();
               }}
             />
+
             <div className="flex justify-end gap-2">
               <button
                 onClick={closeModal}
